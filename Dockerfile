@@ -21,6 +21,7 @@ WORKDIR /${BOOST_TAR}
 RUN ./bootstrap.sh
 RUN ./b2 --with=all -j `nproc` install || true
 
+WORKDIR /
 RUN git clone --branch ${VSOMEIP_VERSION} https://github.com/COVESA/vsomeip.git
 COPY . /vsomeip/_benchmark
 
