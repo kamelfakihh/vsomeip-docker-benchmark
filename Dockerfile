@@ -1,11 +1,11 @@
-ARG BASE_IMAGE=ubuntu:22.04
-# ARG BASE_IMAGE=ubuntu:14.04
+# ARG BASE_IMAGE=ubuntu:22.04
+ARG BASE_IMAGE=ubuntu:14.04
 FROM ${BASE_IMAGE}
 
-ARG VSOMEIP_VERSION=3.5.0
-ARG BOOST_VERSION=1.66.0
-# ARG VSOMEIP_VERSION=2.10.11
-# ARG BOOST_VERSION=1.55.0
+# ARG VSOMEIP_VERSION=3.4.10
+# ARG BOOST_VERSION=1.66.0
+ARG VSOMEIP_VERSION=2.10.11
+ARG BOOST_VERSION=1.55.0
 
 
 ARG BOOST_TAR="boost_${BOOST_VERSION//./_}"
@@ -16,7 +16,6 @@ RUN apt install -y cmake build-essential libssl-dev iproute2 wget git coreutils
 
 WORKDIR /
 RUN wget ${BOOST_URL}
-RUN git clone --branch 2.10.11  https://github.com/COVESA/vsomeip.git
 RUN tar -zxvf ${BOOST_TAR}.tar.gz
 WORKDIR /${BOOST_TAR}
 RUN ./bootstrap.sh
