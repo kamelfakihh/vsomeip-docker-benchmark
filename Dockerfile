@@ -1,11 +1,11 @@
-# ARG BASE_IMAGE=ubuntu:22.04
-ARG BASE_IMAGE=ubuntu:14.04
+ARG BASE_IMAGE=ubuntu:22.04
+# ARG BASE_IMAGE=ubuntu:14.04
 FROM ${BASE_IMAGE}
 
-# ARG VSOMEIP_VERSION=3.4.10
-# ARG BOOST_VERSION=1.66.0
-ARG VSOMEIP_VERSION=2.10.11
-ARG BOOST_VERSION=1.55.0
+ARG VSOMEIP_VERSION=3.4.10
+ARG BOOST_VERSION=1.66.0
+# ARG VSOMEIP_VERSION=2.10.11
+# ARG BOOST_VERSION=1.55.0
 
 
 ARG BOOST_TAR="boost_${BOOST_VERSION//./_}"
@@ -23,7 +23,6 @@ RUN ./b2 --with=all -j `nproc` install || true
 
 WORKDIR /
 RUN git clone --branch ${VSOMEIP_VERSION} https://github.com/COVESA/vsomeip.git
-COPY . /vsomeip/_benchmark
 
 RUN mkdir -p /vsomeip/build
 WORKDIR /vsomeip/build
@@ -32,9 +31,16 @@ RUN make
 RUN make install
 RUN ldconfig
 
-WORKDIR /vsomeip/_benchmark/
-RUN mkdir -p /vsomeip/_benchmark/build
-WORKDIR /vsomeip/_benchmark/build
+COPY . /vsomeip/_benchmark
+WORKDIR /vsomeip/_benchmark/request_response
+RUN mkdir -p /vsomeip/_benchmark/request_response/build
+WORKDIR /vsomeip/_benchmark/request_response/build
+RUN cmake ..
+RUN make
+
+WORKDIR /vsomeip/_benchmark/hello_world
+RUN mkdir -p /vsomeip/_benchmark/hello_world/build
+WORKDIR /vsomeip/_benchmark/hello_world/build
 RUN cmake ..
 RUN make
 
