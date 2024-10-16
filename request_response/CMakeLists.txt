@@ -4,8 +4,8 @@ cmake_minimum_required (VERSION 2.8.1)
 set (CMAKE_CXX_FLAGS "-O3 -std=c++0x")
 
 find_package(vsomeip QUIET)
-IF (NOT someip_FOUND)
-    find_package(vsomeip3)
+IF (NOT vsomeip_FOUND)
+    find_package(vsomeip3 QUIET)
     IF (NOT vsomeip3_FOUND)
         MESSAGE(FATAL_ERROR "Could not locate vsomeip or vsomeip3")
     ENDIF ()
@@ -20,7 +20,7 @@ include_directories(
 
 add_compile_options(-fpermissive)
 
-IF (NOT someip_FOUND)
+IF (NOT vsomeip_FOUND)
     add_executable(bench_request_response_client ../common/bench_measurer.cpp bench_request_response_client.cpp)
     target_link_libraries(bench_request_response_client vsomeip3 ${Boost_LIBRARIES})
     add_executable(bench_request_response_service ../common/bench_measurer.cpp bench_request_response_service.cpp)

@@ -9,8 +9,8 @@ project (vSomeIPHelloWorld)
 set (CMAKE_CXX_FLAGS "-O3 -std=c++0x")
 
 find_package(vsomeip QUIET)
-IF (NOT someip_FOUND)
-    find_package(vsomeip3)
+IF (NOT vsomeip_FOUND)
+    find_package(vsomeip3 QUIET)
     IF (NOT vsomeip3_FOUND)
         MESSAGE(FATAL_ERROR "Could not locate vsomeip or vsomeip3")
     ENDIF ()
@@ -25,7 +25,7 @@ include_directories (
 
 add_compile_options(-fpermissive)
 
-IF (NOT someip_FOUND)
+IF (NOT vsomeip_FOUND)
     add_executable (hello_world_service hello_world_service_main.cpp ../common/bench_measurer.cpp)
     target_link_libraries(hello_world_service vsomeip3 ${CMAKE_THREAD_LIBS_INIT})
     add_executable (hello_world_client hello_world_client_main.cpp ../common/bench_measurer.cpp)
