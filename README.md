@@ -7,7 +7,7 @@
 ```
 git clone https://github.com/kamelfakihh/vsomeip-docker-benchmark.git
 cd vsomeip-docker-benchmark
-sudo docker build -t vsomeip-bench .
+sudo docker build -t vsomeip-bench . --build-arg BASE_IMAGE=ubuntu:22.04 --build-arg VSOMEIP_VERSION=3.5.1 --build-arg BOOST_VERSION=1.55.0
 ```
 2. run client :
 ```
